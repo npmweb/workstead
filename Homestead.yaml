@@ -17,7 +17,5 @@ folders:
 sites:
     - map: homestead.app
       to: /home/vagrant/Code/Laravel/public
+      phperr: E_ALL
 
-variables:
-    - key: APP_ENV
-      value: local

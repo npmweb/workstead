@@ -1,42 +1,28 @@
 #!/usr/bin/env bash
 
-block="server {
-    listen 80;
-    server_name $1;
-    root $2;
+if [ -z "$3" ]; then
+    phperr=$(php -r "echo $3;")
+    php_options="php_value error_reporting $phperr"
+fi
 
-    index index.html index.htm index.php;
+block="<VirtualHost *:80>
+    ServerName $1
+    DocumentRoot $2
 
-    charset utf-8;
+    # PHP options if any ...
+    $php_options
 
-    location / {
-        try_files \$uri \$uri/ /index.php?\$query_string;
-    }
+    <Directory $2>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        Allow from all
 
-    location = /favicon.ico { access_log off; log_not_found off; }
-    location = /robots.txt  { access_log off; log_not_found off; }
-
-    access_log off;
-    error_log  /var/log/nginx/$1-error.log error;
-
-    error_page 404 /index.php;
-
-    sendfile off;
-
-    location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
-        fastcgi_index index.php;
-        include fastcgi_params;
-    }
-
-    location ~ /\.ht {
-        deny all;
-    }
-}
+        # for compatibility with Apache 2.4
+        Require all granted
+    </Directory>
+</VirtualHost>
 "
 
-echo "$block" > "/etc/nginx/sites-available/$1"
-ln -fs "/etc/nginx/sites-available/$1" "/etc/nginx/sites-enabled/$1"
-service nginx restart
-service php5-fpm restart
+echo "$block" > "/etc/httpd/conf.d/50-$1.conf"
+service httpd restart

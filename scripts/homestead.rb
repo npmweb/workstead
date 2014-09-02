@@ -52,22 +52,17 @@ class Homestead
       config.vm.synced_folder folder["map"], folder["to"], type: folder["type"] ||= nil
     end
 
-    # Install All The Configured Nginx Sites
-    # settings["sites"].each do |site|
-    #   config.vm.provision "shell" do |s|
-    #       s.inline = "bash /vagrant/scripts/serve.sh $1 $2"
-    #       s.args = [site["map"], site["to"]]
-    #   end
-    # end
+    # Remove Previously Configured Apache Sites
+    config.vm.provision "shell" do |s|
+      s.inline = "rm -fv /etc/httpd/conf.d/50-*.conf 2> /dev/null"
+    end
 
-    # Configure All Of The Server Environment Variables
-    # if settings.has_key?("variables")
-    #   settings["variables"].each do |var|
-    #     config.vm.provision "shell" do |s|
-    #         s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php5/fpm/php-fpm.conf && service php5-fpm restart"
-    #         s.args = [var["key"], var["value"]]
-    #     end
-    #   end
-    # end
+    # Install All The Configured Apache Sites
+    settings["sites"].each do |site|
+      config.vm.provision "shell" do |s|
+          s.inline = "bash /vagrant/scripts/serve.sh $1 $2 $3"
+          s.args = [site["map"], site["to"], site["phperr"] ||= nil]
+      end
+    end
   end
 end
