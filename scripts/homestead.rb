@@ -60,7 +60,7 @@ class Homestead
     # Install All The Configured Apache Sites
     settings["sites"].each do |site|
       config.vm.provision "shell" do |s|
-          s.inline = "bash /vagrant/scripts/serve.sh $1 $2 $3"
+          s.inline = "bash /vagrant/scripts/serve.sh $1 $2 \"$3\""
           s.args = [site["map"], site["to"], site["phperr"] ||= nil]
       end
     end
