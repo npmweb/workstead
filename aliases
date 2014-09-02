@@ -16,15 +16,15 @@ alias c='clear'
 alias art='php artisan'
 alias phpunit='vendor/bin/phpunit'
 
-# function vhost() {
-# 	if [[ "$1" && "$2" ]]
-# 	then
-# 		sudo dos2unix /vagrant/scripts/serve.sh
-# 		sudo bash /vagrant/scripts/serve.sh "$1" "$2"
-# 	else
-# 		echo "Error: missing required parameters."
-# 		echo "Usage: "
-# 		echo "  serve domain path"
-# 	fi
-# }
+function serve() {
+	if [[ "$1" && "$2" ]]
+	then
+		# sudo dos2unix /vagrant/scripts/serve.sh
+		sudo bash /vagrant/scripts/serve.sh "$1" "$2" "$3"
+	else
+		echo "Error: missing required parameters."
+		echo "Usage: "
+		echo "  serve domain path [phperr]"
+	fi
+}
 

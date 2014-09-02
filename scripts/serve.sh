@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -z "$3" ]; then
+if [ ! -z "$3" ]; then
     phperr=$(php -r "echo $3;")
     php_options="php_value error_reporting $phperr"
 fi
@@ -17,9 +17,6 @@ block="<VirtualHost *:80>
         AllowOverride All
         Order allow,deny
         Allow from all
-
-        # for compatibility with Apache 2.4
-        Require all granted
     </Directory>
 </VirtualHost>
 "

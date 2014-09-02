@@ -15,7 +15,7 @@ folders:
       to: /home/vagrant/Code
 
 sites:
-    - map: homestead.app
-      to: /home/vagrant/Code/Laravel/public
+    - map: workstead.app
+      to: /home/vagrant/Code
       phperr: E_ALL
 

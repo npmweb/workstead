@@ -38,7 +38,7 @@ class Homestead
     # Copy The ssh Config
     config.vm.provision "shell" do |s|
       s.privileged = false
-      s.inline = "echo $1 | tee /home/vagrant/.ssh/config && chmod 600 /home/vagrant/.ssh/config"
+      s.inline = "echo \"$1\" > /home/vagrant/.ssh/config && chmod 600 /home/vagrant/.ssh/config"
       s.args = [File.read(File.expand_path(settings["config"]))]
     end
 
