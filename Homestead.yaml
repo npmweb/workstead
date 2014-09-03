@@ -13,6 +13,7 @@ keys:
 folders:
     - map: ~/Code
       to: /home/vagrant/Code
+      options: ["fmode=777,dmode=777"]
 
 sites:
     - map: workstead.app
