@@ -9,11 +9,10 @@ alias art='php artisan'
 alias admp='php artisan dump'
 alias phpunit='vendor/bin/phpunit'
 
-
-alias gs='git status '
+alias gs='git st '
 alias ga='git a '
 alias gb='git br '
-alias gc='git commit'
+alias gc='git ci'
 alias gd='git diff'
 alias go='git checkout '
 alias gk='gitk --all&'
