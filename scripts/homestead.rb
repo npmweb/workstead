@@ -1,8 +1,8 @@
 class Homestead
   def Homestead.configure(config, settings)
     # Configure The Box
-    config.vm.box = "lucasvscn/workstead"
-    config.vm.hostname = "workstead"
+    config.vm.box = "npmweb/dvmcweb-php55"
+    config.vm.hostname = "dvmcweb55-local"
 
     # Configure A Private Network IP
     config.vm.network :private_network, ip: settings["ip"] ||= "192.168.10.10"
@@ -50,7 +50,7 @@ class Homestead
 
     # Register All Of The Configured Shared Folders
     settings["folders"].each do |folder|
-      config.vm.synced_folder folder["map"], folder["to"], type: folder["type"] ||= nil, :mount_options => folder["options"] ||= nil
+      config.vm.synced_folder folder["map"], folder["to"], type: folder["type"] ||= nil, :mount_options => folder["options"] ||= nil, :owner => folder["owner"] ||= nil, :group => folder["group"] ||= nil
     end
 
     # Remove Previously Configured Apache Sites
@@ -61,9 +61,18 @@ class Homestead
     # Install All The Configured Apache Sites
     settings["sites"].each do |site|
       config.vm.provision "shell" do |s|
-          s.inline = "bash /vagrant/scripts/serve.sh $1 $2 \"$3\""
-          s.args = [site["map"], site["to"], site["phperr"] ||= nil]
+          s.inline = "bash /vagrant/scripts/serve.sh $1 $2 \"$3\" \"$4\" \"$5\""
+          s.args = [site["map"], site["to"], site["alias"] ||= "", site["alias_to"] ||= "", site["phperr"] ||= ""]
       end
     end
+
+    # Create all configured databases
+    settings["dbs"].each do |db|
+      config.vm.provision "shell" do |s|
+          s.inline = "bash /vagrant/scripts/mysql.sh $1 $2 $3"
+          s.args = [db["database"], db["username"], db["password"]]
+      end
+    end
+
   end
 end

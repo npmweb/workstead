@@ -11,12 +11,21 @@ keys:
     - ~/.ssh/id_rsa
 
 folders:
-    - map: ~/Code
-      to: /home/vagrant/Code
+    - map: ~/apps
+      to: /srv/apps
+      options: ["fmode=777,dmode=777"]
+    - map: ~/www
+      to: /srv/www
       options: ["fmode=777,dmode=777"]
 
 sites:
-    - map: workstead.app
-      to: /home/vagrant/Code
+    - map: localhost
+      to: /srv/www/localhost
       phperr: E_ALL
+
+dbs:
+    - database: l_template
+      username: l_template
+      password: l_template
+
 
