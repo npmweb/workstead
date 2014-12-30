@@ -1,8 +1,10 @@
 class Homestead
   def Homestead.configure(config, settings)
     # Configure The Box
-    config.vm.box = "npmweb/dvmcweb-php55"
-    config.vm.hostname = "dvmcweb55-local"
+    config.vm.box = "npmweb/workstead"
+    config.vm.hostname = "dvmcweb55-local2"
+    config.vm.box_version = ">= 0.1.1"
+    config.vm.box_check_update = true
 
     # Configure A Private Network IP
     config.vm.network :private_network, ip: settings["ip"] ||= "192.168.10.10"
@@ -13,6 +15,7 @@ class Homestead
       vb.customize ["modifyvm", :id, "--cpus", settings["cpus"] ||= "1"]
       vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.name = "php55-dev"
     end
 
     # Configure Port Forwarding To The Box
@@ -20,6 +23,7 @@ class Homestead
     config.vm.network "forwarded_port", guest: 8000, host: 8008
     config.vm.network "forwarded_port", guest: 3306, host: 33060
     config.vm.network "forwarded_port", guest: 5432, host: 54320
+    config.vm.network "forwarded_port", guest: 11300, host: 11333
 
     # Configure The Public Key For SSH Access
     config.vm.provision "shell" do |s|
@@ -44,9 +48,9 @@ class Homestead
     end
 
     # Copy The Bash Aliases
-    config.vm.provision "shell" do |s|
-      s.inline = "cp /vagrant/aliases /home/vagrant/.aliases"
-    end
+    #config.vm.provision "shell" do |s|
+    #  s.inline = "cp /vagrant/aliases /home/vagrant/.aliases"
+    #end
 
     # Register All Of The Configured Shared Folders
     settings["folders"].each do |folder|

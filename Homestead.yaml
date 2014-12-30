@@ -21,6 +21,8 @@ folders:
 sites:
     - map: localhost
       to: /srv/www/localhost
+      alias: /test
+      alias_to: /srv/apps/test
       phperr: E_ALL
 
 dbs:
