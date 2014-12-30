@@ -7,7 +7,7 @@ class Homestead
     config.vm.box_check_update = true
 
     # Configure A Private Network IP
-    config.vm.network :private_network, ip: settings["ip"] ||= "192.168.10.10"
+    config.vm.network "private_network", ip: settings["ip"] ||= "192.168.10.10", auto_config: false
 
     # Configure A Few VirtualBox Settings
     config.vm.provider "virtualbox" do |vb|
@@ -48,9 +48,9 @@ class Homestead
     end
 
     # Copy The Bash Aliases
-    #config.vm.provision "shell" do |s|
-    #  s.inline = "cp /vagrant/aliases /home/vagrant/.aliases"
-    #end
+    config.vm.provision "shell" do |s|
+      s.inline = "cp /vagrant/aliases /home/vagrant/.aliases"
+    end
 
     # Register All Of The Configured Shared Folders
     settings["folders"].each do |folder|
