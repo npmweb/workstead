@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 echo "Args: 1[$1] 2[$2] 3[$3] 4[$4] 5[$5]"
+vhost_conf="/etc/httpd/vhosts.d/$1.conf"
+if [ -e $vhost_conf ]; then
+  echo "vhost Config File for $1 exists - abort"
+  exit
+fi
 
 if [ ! -z "$3" ]; then
     alias_name=$(php -r "echo \"$3\";")
@@ -39,5 +44,4 @@ block="<VirtualHost *:80>
 </VirtualHost>
 "
 
-echo "$block" > "/etc/httpd/conf.d/50-$1.conf"
-service httpd restart
+echo "$block" > "$vhost_conf"

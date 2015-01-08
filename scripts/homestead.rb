@@ -57,11 +57,6 @@ class Homestead
       config.vm.synced_folder folder["map"], folder["to"], type: folder["type"] ||= nil, :mount_options => folder["options"] ||= nil, :owner => folder["owner"] ||= nil, :group => folder["group"] ||= nil
     end
 
-    # Remove Previously Configured Apache Sites
-    config.vm.provision "shell" do |s|
-      s.inline = "rm -fv /etc/httpd/conf.d/50-*.conf 2> /dev/null"
-    end
-
     # Install All The Configured Apache Sites
     settings["sites"].each do |site|
       config.vm.provision "shell" do |s|
@@ -78,5 +73,9 @@ class Homestead
       end
     end
 
+    # restart the things that need restarting
+    config.vm.provision "shell" do |s|
+      s.inline = "sudo service httpd restart"
+    end
   end
 end
