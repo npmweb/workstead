@@ -13,10 +13,12 @@ keys:
 folders:
     - map: ~/apps
       to: /srv/apps
-      options: ["fmode=777,dmode=777"]
+      type: nfs
+    #  options: ["fmode=777,dmode=777"]
     - map: ~/www
       to: /srv/www
-      options: ["fmode=777,dmode=777"]
+      type: nfs
+    #  options: ["fmode=777,dmode=777"]
 
 sites:
     - map: localhost
