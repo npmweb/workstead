@@ -15,7 +15,7 @@ class Homestead
       vb.customize ["modifyvm", :id, "--cpus", settings["cpus"] ||= "1"]
       vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      vb.name = "php55-dev"
+      vb.name = "php55-rd"
     end
 
     # Configure Port Forwarding To The Box
@@ -24,6 +24,8 @@ class Homestead
     config.vm.network "forwarded_port", guest: 3306, host: 33060
     config.vm.network "forwarded_port", guest: 5432, host: 54320
     config.vm.network "forwarded_port", guest: 11300, host: 11333
+
+    config.ssh.private_key_path = "~/.vagrant.d/insecure_private_key"
 
     # Configure The Public Key For SSH Access
     config.vm.provision "shell" do |s|

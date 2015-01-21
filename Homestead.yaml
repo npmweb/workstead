@@ -13,23 +13,23 @@ keys:
 folders:
     - map: ~/apps
       to: /srv/apps
-      type: nfs
-    #  options: ["fmode=777,dmode=777"]
+      #type: nfs
+      options: ["fmode=777,dmode=777"]
     - map: ~/www
       to: /srv/www
-      type: nfs
-    #  options: ["fmode=777,dmode=777"]
+      #type: nfs
+      options: ["fmode=777,dmode=777"]
 
 sites:
-    - map: localhost
+    - map: local.box
       to: /srv/www/localhost
       alias: /test
       alias_to: /srv/apps/test
       phperr: E_ALL
 
 dbs:
-    - database: l_template
-      username: l_template
-      password: l_template
+    - database: l_myapp
+      username: l_myapp
+      password: l_myapp
 
 
