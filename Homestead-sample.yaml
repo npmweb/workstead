@@ -23,14 +23,12 @@ folders:
 sites:
     - map: local.box
       to: /srv/www/localhost
-      alias: /test
-      alias_to: /srv/apps/test
       phperr: E_ALL
       aliases:
-        - name: test.local
-          to: /srv/endpoints/test
-        - name: test2.local
-          to: /srv/endpoints/test2
+        - name: /test
+          to: /srv/apps/myapp/endpoints/test
+        - name: /test2
+          to: /srv/apps/myapp/endpoints/test2
 
 dbs:
     - database: l_myapp
