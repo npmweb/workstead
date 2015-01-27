@@ -62,9 +62,18 @@ class Homestead
 
     # Install All The Configured Apache Sites
     settings["sites"].each do |site|
+      # Process the incoming hashes to a string for passing to the shell script
+      if site['aliases']
+        aliases = []
+        site['aliases'].each do |a|
+          aliases << "#{a["name"]},#{a["to"]}"
+        end
+        concat_aliases = aliases.join(':')
+      end
+
       config.vm.provision "shell" do |s|
           s.inline = "bash /vagrant/scripts/serve.sh $1 $2 \"$3\" \"$4\" \"$5\""
-          s.args = [site["map"], site["to"], site["alias"] ||= "", site["alias_to"] ||= "", site["phperr"] ||= ""]
+          s.args = [site["map"], site["to"], site["alias"] ||= "", site["alias_to"] ||= "", site["phperr"] ||= "", concat_aliases ||= ""]
       end
     end
 
