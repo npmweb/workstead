@@ -72,8 +72,8 @@ class Homestead
       end
 
       config.vm.provision "shell" do |s|
-          s.inline = "bash /vagrant/scripts/serve.sh $1 $2 \"$3\" \"$4\" \"$5\""
-          s.args = [site["map"], site["to"], site["alias"] ||= "", site["alias_to"] ||= "", site["phperr"] ||= "", concat_aliases ||= ""]
+          s.inline = "bash /vagrant/scripts/serve.sh $1 $2 \"$3\" \"$4\""
+          s.args = [site["map"], site["to"], site["phperr"] ||= "", concat_aliases ||= ""]
       end
     end
 
