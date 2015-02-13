@@ -55,6 +55,11 @@ class Homestead
       s.inline = "cp /vagrant/aliases /home/vagrant/.aliases"
     end
 
+    # PHP tooling setup
+    config.vm.provision "shell" do |s|
+      s.inline = "sudo /usr/local/bin/composer self-update"
+    end
+
     # Register All Of The Configured Shared Folders
     settings["folders"].each do |folder|
       config.vm.synced_folder folder["map"], folder["to"], type: folder["type"] ||= nil, :mount_options => folder["options"] ||= nil, :owner => folder["owner"] ||= nil, :group => folder["group"] ||= nil
