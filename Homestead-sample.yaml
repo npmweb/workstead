@@ -1,5 +1,6 @@
 ---
 ip: "192.168.10.10"
+boxname: "php55-local"
 memory: 1920
 cpus: 1
 
