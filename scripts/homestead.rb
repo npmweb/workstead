@@ -5,7 +5,7 @@ class Homestead
     config.vm.hostname = "dvmcweb55-local2"
     config.vm.box_version = ">= 0.1.1"
     config.vm.box_check_update = true
-    config.vm.box_url = "http://test.npmweb.org/downloads/npm-workstead-0.1.6.box"
+    # config.vm.box_url = "http://test.npmweb.org/downloads/npm-workstead-0.1.6.box"
 
     # Configure A Private Network IP
     config.vm.network "private_network", ip: settings["ip"] ||= "192.168.10.10", auto_config: true
